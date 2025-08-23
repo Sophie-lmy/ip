@@ -1,6 +1,8 @@
-class Task {
+abstract class Task {
     private String description;
     private boolean done;
+
+    protected abstract String typePrefix();
 
     Task(String description) {
         this.description = description;
@@ -10,19 +12,23 @@ class Task {
     public void mark() {
         this.done = true;
     }
-
     public void unmark() {
         this.done = false;
     }
-
     public boolean isDone() {
         return done;
     }
 
-    @Override
-    public String toString() {
+    protected String base() {
         return String.format("[%s] %s",
                 done ? "X" : " ",
                 description);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[%s]%s",
+                typePrefix(),
+                base());
     }
 }
