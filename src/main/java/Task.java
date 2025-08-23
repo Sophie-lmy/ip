@@ -1,0 +1,28 @@
+class Task {
+    private String description;
+    private boolean done;
+
+    Task(String description) {
+        this.description = description;
+        this.done = false;
+    }
+
+    public void mark() {
+        this.done = true;
+    }
+
+    public void unmark() {
+        this.done = false;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[%s] %s",
+                done ? "X" : " ",
+                description);
+    }
+}
