@@ -1,9 +1,9 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Talkist {
     public static void main(String[] args) {
-        Task[] tasks = new Task[100];
-        int pointer = 0;
+        ArrayList<Task> tasks = new ArrayList<>(100);
 
         Scanner sc = new Scanner(System.in);
         System.out.println("This is Talkist, a chat bot based on DUKE. How can I help you?");
@@ -18,8 +18,8 @@ public class Talkist {
                 }
 
                 if (input.equals("list")) {
-                    for (int i = 0; i < pointer; i++) {
-                        System.out.println(String.format("%d. %s", i + 1, tasks[i].toString()));
+                    for (int i = 0; i < tasks.size(); i++) {
+                        System.out.println(String.format("%d. %s", i + 1, tasks.get(i).toString()));
                     }
                     continue;
                 }
@@ -28,8 +28,8 @@ public class Talkist {
                     String numStr = input.substring(5).trim();
                     if (numStr.isEmpty()) throw new IllegalArgumentException();
                     int marking = Integer.parseInt(numStr);
-                    if (marking < 1 || marking > pointer) throw new ArrayIndexOutOfBoundsException();
-                    Task t = tasks[marking - 1];
+                    if (marking < 1 || marking > tasks.size()) throw new ArrayIndexOutOfBoundsException();
+                    Task t = tasks.get(marking - 1);
                     t.mark();
                     System.out.println("I've marked this task as done. Please check.");
                     System.out.println(t.toString());
@@ -40,11 +40,23 @@ public class Talkist {
                     String numStr = input.substring(7).trim();
                     if (numStr.isEmpty()) throw new IllegalArgumentException();
                     int marking = Integer.parseInt(numStr);
-                    if (marking < 1 || marking > pointer) throw new ArrayIndexOutOfBoundsException();
-                    Task t = tasks[marking - 1];
+                    if (marking < 1 || marking > tasks.size()) throw new ArrayIndexOutOfBoundsException();
+                    Task t = tasks.get(marking - 1);
                     t.unmark();
                     System.out.println("I've marked this task as not done. Please check.");
                     System.out.println(t.toString());
+                    continue;
+                }
+
+                if (input.startsWith("delete ")) {
+                    String numStr = input.substring(7).trim();
+                    if (numStr.isEmpty()) throw new IllegalArgumentException();
+                    int remove = Integer.parseInt(numStr);
+                    if (remove < 1 || remove > tasks.size()) throw new ArrayIndexOutOfBoundsException();
+                    Task t = tasks.remove(remove - 1);
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println("  " + t.toString());
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                     continue;
                 }
 
@@ -52,7 +64,7 @@ public class Talkist {
                     String description = input.substring(5).trim();
                     if (description.isEmpty()) throw new IllegalArgumentException();
                     Task t = new Todo(description);
-                    tasks[pointer++] = t;
+                    tasks.add(t);
                     System.out.println("added todo: " + description);
                     continue;
                 }
@@ -65,7 +77,7 @@ public class Talkist {
                     String by = rest.substring(at + 3).trim();
                     if (description.isEmpty() || by.isEmpty()) throw new IllegalArgumentException();
                     Task t = new Deadline(description, by);
-                    tasks[pointer++] = t;
+                    tasks.add(t);
                     System.out.println("added Deadline: " + description + " by " + by);
                     continue;
                 }
@@ -80,7 +92,7 @@ public class Talkist {
                     String to = rest.substring(toAt + 3).trim();
                     if (description.isEmpty() || from.isEmpty() || to.isEmpty()) throw new IllegalArgumentException();
                     Task t = new Event(description, from, to);
-                    tasks[pointer++] = t;
+                    tasks.add(t);
                     System.out.println("added Event: " + description + " from " + from + " to " + to);
                     continue;
                 }
