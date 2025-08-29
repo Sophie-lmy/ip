@@ -1,10 +1,12 @@
-abstract class Task {
+package talkist.task.model;
+
+public abstract class Task {
     private String description;
     private boolean done;
 
     protected abstract String typePrefix();
 
-    Task(String description) {
+    public Task(String description) {
         this.description = description;
         this.done = false;
     }
@@ -23,12 +25,5 @@ abstract class Task {
         return String.format("[%s] %s",
                 done ? "X" : " ",
                 description);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("[%s]%s",
-                typePrefix(),
-                base());
     }
 }

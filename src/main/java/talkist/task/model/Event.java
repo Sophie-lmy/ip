@@ -1,13 +1,17 @@
+package talkist.task.model;
+
 import java.time.LocalDateTime;
+
+import talkist.parser.DateTimeParser;
 
 public class Event extends Task {
     private LocalDateTime from;
     private LocalDateTime to;
 
-    Event(String description, String from, String to) {
+   public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description);
-        this.from = DateTimeParser.parse(from);
-        this.to = DateTimeParser.parse(to);
+        this.from = from;
+        this.to = to;
     }
 
     @Override

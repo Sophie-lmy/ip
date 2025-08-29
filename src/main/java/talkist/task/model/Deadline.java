@@ -1,11 +1,15 @@
+package talkist.task.model;
+
 import java.time.LocalDateTime;
+
+import talkist.parser.DateTimeParser;
 
 public class Deadline extends Task {
     private LocalDateTime by;
 
-    Deadline(String description, String by) {
+    public Deadline(String description, LocalDateTime by) {
         super(description);
-        this.by = DateTimeParser.parse(by);
+        this.by = by;
     }
 
     @Override

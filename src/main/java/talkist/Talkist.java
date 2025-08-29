@@ -1,3 +1,14 @@
+package talkist;
+
+import talkist.parser.Parser;
+import talkist.storage.Storage;
+import talkist.task.TaskList;
+import talkist.ui.Ui;
+import talkist.task.model.Deadline;
+import talkist.task.model.Event;
+import talkist.task.model.Task;
+import talkist.task.model.Todo;
+
 import java.util.ArrayList;
 
 public class Talkist {

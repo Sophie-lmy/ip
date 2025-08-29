@@ -1,3 +1,5 @@
+package talkist.parser;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -22,6 +24,22 @@ public class DateTimeParser {
 		} catch (DateTimeParseException e) {
 			throw new IllegalArgumentException(
 					"Invalid date/time format. Please use yyyy-MM-dd HHmm, e.g. 2025-08-19 1600");
+		}
+	}
+
+	/**
+	 * Parses a date-time string from storage to LocalDateTime.
+	 *
+	 * @param input the date-time string from storage
+	 * @return a LocalDateTime object
+	 * @throws IllegalArgumentException if the string format is invalid and give instructions
+	 */
+	public static LocalDateTime parseFromStorage(String input) {
+		try {
+			return LocalDateTime.parse(input, OUTPUT_FORMAT);
+		} catch (DateTimeParseException e) {
+			throw new IllegalArgumentException(
+					"Invalid date/time format.");
 		}
 	}
 

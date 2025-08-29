@@ -1,8 +1,9 @@
+package talkist.task;
+
 import java.util.ArrayList;
 
-/**
- * Contains the task list and provides operations on it.
- */
+import talkist.task.model.Task;
+
 public class TaskList {
 	private final ArrayList<Task> tasks;
 

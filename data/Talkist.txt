@@ -1,2 +1,2 @@
-[T][ ] todo1
-[D][ ] cs2103t (by: Aug 29 2025 16:00)
+[T][ ] assignment 1
+[D][ ] week3 iP (by: Aug 29 2025 16:00)
