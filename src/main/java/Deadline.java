@@ -1,9 +1,11 @@
+import java.time.LocalDateTime;
+
 public class Deadline extends Task {
-    private String by;
+    private LocalDateTime by;
 
     Deadline(String description, String by) {
         super(description);
-        this.by = by;
+        this.by = DateTimeParser.parse(by);
     }
 
     @Override
@@ -11,6 +13,6 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return String.format("[%s]%s (by: %s)", typePrefix(), base(), by);
+        return String.format("[%s]%s (by: %s)", typePrefix(), base(), DateTimeParser.format(by));
     }
 }

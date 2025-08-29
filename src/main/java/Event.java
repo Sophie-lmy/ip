@@ -1,17 +1,21 @@
+import java.time.LocalDateTime;
+
 public class Event extends Task {
-    private String from;
-    private String to;
+    private LocalDateTime from;
+    private LocalDateTime to;
 
     Event(String description, String from, String to) {
         super(description);
-        this.from = from;
-        this.to = to;
+        this.from = DateTimeParser.parse(from);
+        this.to = DateTimeParser.parse(to);
     }
 
     @Override
     protected String typePrefix() { return "E"; }
     @Override
     public String toString() {
-        return String.format("[%s]%s (from: %s to: %s)", typePrefix(), base(), from, to);
+        return String.format("[%s]%s (from: %s to: %s)", typePrefix(), base(),
+                DateTimeParser.format(from),
+                DateTimeParser.format(to));
     }
 }
