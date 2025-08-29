@@ -1,12 +1,13 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Locale;
 
 public class DateTimeParser {
 	private static final DateTimeFormatter INPUT_FORMAT =
 			DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 	private static final DateTimeFormatter OUTPUT_FORMAT =
-			DateTimeFormatter.ofPattern("MMM d yyyy HH:mm");
+			DateTimeFormatter.ofPattern("MMM d yyyy HH:mm", Locale.ENGLISH);
 
 	/**
 	 * Parses a date-time string to LocalDateTime.
