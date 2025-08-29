@@ -1,9 +1,12 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.IOException;
 
 public class Talkist {
     public static void main(String[] args) {
-        ArrayList<Task> tasks = new ArrayList<>(100);
+        Storage storage = new Storage("./data/Talkist.txt");
+
+        ArrayList<Task> tasks = storage.load();
 
         Scanner sc = new Scanner(System.in);
         System.out.println("This is Talkist, a chat bot based on DUKE. How can I help you?");
@@ -33,6 +36,7 @@ public class Talkist {
                     t.mark();
                     System.out.println("I've marked this task as done. Please check.");
                     System.out.println(t.toString());
+                    storage.save(tasks);
                     continue;
                 }
 
@@ -45,6 +49,7 @@ public class Talkist {
                     t.unmark();
                     System.out.println("I've marked this task as not done. Please check.");
                     System.out.println(t.toString());
+                    storage.save(tasks);
                     continue;
                 }
 
@@ -57,6 +62,7 @@ public class Talkist {
                     System.out.println("Noted. I've removed this task:");
                     System.out.println("  " + t.toString());
                     System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                    storage.save(tasks);
                     continue;
                 }
 
@@ -66,6 +72,7 @@ public class Talkist {
                     Task t = new Todo(description);
                     tasks.add(t);
                     System.out.println("added todo: " + description);
+                    storage.save(tasks);
                     continue;
                 }
 
@@ -79,6 +86,7 @@ public class Talkist {
                     Task t = new Deadline(description, by);
                     tasks.add(t);
                     System.out.println("added Deadline: " + description + " by " + by);
+                    storage.save(tasks);
                     continue;
                 }
 
@@ -94,6 +102,7 @@ public class Talkist {
                     Task t = new Event(description, from, to);
                     tasks.add(t);
                     System.out.println("added Event: " + description + " from " + from + " to " + to);
+                    storage.save(tasks);
                     continue;
                 }
 

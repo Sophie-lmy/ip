@@ -54,7 +54,6 @@ public class Storage {
      * Saves the provided task list to the storage file.
      *
      * @param tasks List of tasks to save.
-     * @throws IOException If an I/O error occurs while saving.
      */
     public void save(ArrayList<Task> tasks) {
         try {
@@ -73,7 +72,6 @@ public class Storage {
      *
      * @param line One line from the storage file.
      * @return Task object.
-     * @throws IllegalArgumentException If the line format is invalid.
      */
     private Task parseTask(String line) {
         try {
