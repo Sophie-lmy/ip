@@ -1,1 +1,0 @@
-package talkist.task.model;

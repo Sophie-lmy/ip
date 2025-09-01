@@ -7,6 +7,12 @@ public abstract class Task {
     protected abstract String typePrefix();
 
     public Task(String description) {
+        if (description == null) {
+            throw new NullPointerException("Description cannot be null");
+        }
+        if (description.trim().isEmpty()) {
+            throw new IllegalArgumentException("Description cannot be empty");
+        }
         this.description = description;
         this.done = false;
     }
