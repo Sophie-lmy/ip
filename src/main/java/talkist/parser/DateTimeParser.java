@@ -5,6 +5,11 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
+/**
+ * Contains methods to convert input format date-time strings like "2025-09-02 1600" or
+ * output format strings like "Sep 2 2025 16:00" into LocalDateTime Object, or convert
+ * LocalDateTime Object into output format strings.
+ */
 public class DateTimeParser {
 	private static final DateTimeFormatter INPUT_FORMAT =
 			DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");

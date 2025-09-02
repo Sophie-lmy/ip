@@ -10,6 +10,9 @@ import talkist.ui.Ui;
 
 import java.time.LocalDateTime;
 
+/**
+ * Contains the method to read, execute and respond to user commands.
+ */
 public class Parser {
 	/**
 	 * Executes a command string on the task list.
