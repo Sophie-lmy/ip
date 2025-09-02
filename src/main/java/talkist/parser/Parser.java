@@ -14,9 +14,9 @@ public class Parser {
 	/**
 	 * Executes a command string on the task list.
 	 *
-	 * @param input user input
-	 * @param tasks TaskList object
-	 * @param ui Ui object
+	 * @param input   user input
+	 * @param tasks   TaskList object
+	 * @param ui      Ui object
 	 * @param storage Storage object
 	 * @return true if the program should exit, false otherwise
 	 */
