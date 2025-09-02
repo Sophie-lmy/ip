@@ -68,4 +68,13 @@ public abstract class Task {
                 done ? "X" : " ",
                 description);
     }
+
+    /**
+     * Returns the description of this task.
+     *
+     * @return description string of the task
+     */
+    public String getDescription() {
+        return this.description;
+    }
 }

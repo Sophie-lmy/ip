@@ -9,6 +9,7 @@ import talkist.task.model.Todo;
 import talkist.ui.Ui;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 /**
  * Contains the method to read, execute and respond to user commands.
@@ -101,6 +102,20 @@ public class Parser {
 				tasks.addTask(t);
 				ui.show("added Event: " + desc + " from " + from + " to " + to);
 				storage.save(tasks.getTasks());
+				return false;
+			}
+
+			if (input.startsWith("find ")) {
+				String keyword = input.substring(5).trim();
+				ArrayList<Task> matches = tasks.find(keyword);
+				if (matches.isEmpty()) {
+					ui.show("No tasks found matching: " + keyword);
+				} else {
+					ui.show("Here are the matching tasks in your list:");
+					for (int i = 0; i < matches.size(); i++) {
+						ui.show(String.format("%d.%s", i + 1, matches.get(i).toString()));
+					}
+				}
 				return false;
 			}
 
