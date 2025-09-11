@@ -1,2 +1,2 @@
-[T][ ] assignment 1
+[T][X] assignment 1
 [D][X] week3 iP (by: Aug 29 2025 16:00)

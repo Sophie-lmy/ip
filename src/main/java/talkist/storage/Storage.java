@@ -83,7 +83,9 @@ public class Storage {
             if (type.equals("T")) {
                 String desc = line.substring(7);
                 Todo todoTask = new Todo(desc);
-                if (done) todoTask.mark();
+                if (done) {
+                    todoTask.mark();
+                }
                 return todoTask;
             } else if (type.equals("D")) {
                 int idx = line.indexOf("(by:");
@@ -91,7 +93,9 @@ public class Storage {
                 String byStr = line.substring(idx + 5, line.length() - 1).trim();
                 LocalDateTime by = DateTimeParser.parseFromStorage(byStr);
                 Deadline deadlineTask = new Deadline(desc, by);
-                if (done) deadlineTask.mark();
+                if (done) {
+                    deadlineTask.mark();
+                }
                 return deadlineTask;
             } else if (type.equals("E")) {
                 int idxFrom = line.indexOf("(from:");
@@ -102,7 +106,9 @@ public class Storage {
                 LocalDateTime from = DateTimeParser.parseFromStorage(fromStr);
                 LocalDateTime to = DateTimeParser.parseFromStorage(toStr);
                 Event eventTask = new Event(desc, from, to);
-                if (done) eventTask.mark();
+                if (done) {
+                    eventTask.mark();
+                }
                 return eventTask;
             }
         } catch (Exception e) {
