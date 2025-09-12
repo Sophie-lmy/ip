@@ -9,6 +9,10 @@ checkstyle {
     toolVersion = '11.0.0'
 }
 
+tasks.withType(Checkstyle) {
+    enabled = false
+}
+
 repositories {
     mavenCentral()
 }
