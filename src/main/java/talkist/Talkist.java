@@ -6,24 +6,34 @@ import talkist.parser.Parser;
 import talkist.storage.Storage;
 import talkist.task.TaskList;
 import talkist.task.model.Task;
-import talkist.ui.Ui;
 
+/**
+ * Core logic of the Talkist chatbot.
+ * Provides method to get response for user input.
+ */
 public class Talkist {
-    public static void main(String[] args) {
-        Storage storage = new Storage("./data/Talkist.txt");
+
+    private TaskList tasks;
+    private Storage storage;
+
+    /**
+     * Constructor initializes Talkist with storage file and loads existing tasks.
+     * @param filePath path to the data file
+     */
+    public Talkist(String filePath) {
+        storage = new Storage(filePath);
         ArrayList<Task> loadedTasks = storage.load();
+        tasks = new TaskList(loadedTasks);
+    }
 
-        TaskList tasks = new TaskList(loadedTasks);
-        Ui ui = new Ui();
-
-        ui.show("This is Talkist, a chat bot based on DUKE. How can I help you?");
-
-        boolean exit = false;
-        while (!exit) {
-            String input = ui.readCommand();
-            exit = Parser.execute(input, tasks, ui, storage);
-        }
-
-        ui.close();
+    /**
+     * Processes user input and returns Talkist's response.
+     * @param input user's input string
+     * @return response string from Talkist
+     */
+    public String getResponse(String input) {
+        // Parser.execute returns a boolean exit flag in original version,
+        // but here we only want the textual response
+        return Parser.parse(input, tasks, storage);
     }
 }

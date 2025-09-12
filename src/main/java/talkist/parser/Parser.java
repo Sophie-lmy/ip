@@ -6,74 +6,74 @@ import talkist.task.model.Deadline;
 import talkist.task.model.Event;
 import talkist.task.model.Task;
 import talkist.task.model.Todo;
-import talkist.ui.Ui;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
- * Contains the method to read, execute and respond to user commands.
+ * Contains the method to read and respond to user commands for GUI usage.
+ * Returns response strings instead of printing to console.
  */
 public class Parser {
+
 	/**
-	 * Executes a command string on the task list.
+	 * Parses user input and executes the command on the task list.
+	 * Returns a string response for GUI display.
 	 *
 	 * @param input   user input
 	 * @param tasks   TaskList object
-	 * @param ui      Ui object
 	 * @param storage Storage object
-	 * @return true if the program should exit, false otherwise
+	 * @return the response string to display
 	 */
-	public static boolean execute(String input, TaskList tasks, Ui ui, Storage storage) {
+	public static String parse(String input, TaskList tasks, Storage storage) {
+		StringBuilder response = new StringBuilder();
+
 		try {
 			if (input.equals("bye")) {
-				ui.show("Bye! See you soon.");
-				return true;
+				response.append("Bye! See you soon.");
+				return response.toString();
 			}
 
 			if (input.equals("list")) {
 				for (int i = 0; i < tasks.size(); i++) {
-					ui.show(String.format("%d. %s", i + 1, tasks.getTask(i).toString()));
+					response.append(String.format("%d. %s\n", i + 1, tasks.getTask(i).toString()));
 				}
-				return false;
+				return response.toString();
 			}
 
 			if (input.startsWith("mark ")) {
 				int index = Integer.parseInt(input.substring(5).trim()) - 1;
 				Task t = tasks.getTask(index);
 				t.mark();
-				ui.show("I've marked this task as done. Please check.");
-				ui.show(t.toString());
+				response.append("I've marked this task as done. Please check.\n").append(t.toString());
 				storage.save(tasks.getTasks());
-				return false;
+				return response.toString();
 			}
 
 			if (input.startsWith("unmark ")) {
 				int index = Integer.parseInt(input.substring(7).trim()) - 1;
 				Task t = tasks.getTask(index);
 				t.unmark();
-				ui.show("I've marked this task as not done. Please check.");
-				ui.show(t.toString());
+				response.append("I've marked this task as not done. Please check.\n").append(t.toString());
 				storage.save(tasks.getTasks());
-				return false;
+				return response.toString();
 			}
 
 			if (input.startsWith("delete ")) {
 				int index = Integer.parseInt(input.substring(7).trim()) - 1;
 				Task t = tasks.removeTask(index);
-				ui.show("Noted. I've removed this task:");
-				ui.show("  " + t.toString());
+				response.append("Noted. I've removed this task:\n  ").append(t.toString());
 				storage.save(tasks.getTasks());
-				return false;
+				return response.toString();
 			}
 
 			if (input.startsWith("todo ")) {
 				String desc = input.substring(5).trim();
 				Task t = new Todo(desc);
 				tasks.addTask(t);
-				ui.show("added todo: " + desc);
+				response.append("Added todo: ").append(desc);
 				storage.save(tasks.getTasks());
-				return false;
+				return response.toString();
 			}
 
 			if (input.startsWith("deadline ")) {
@@ -84,9 +84,9 @@ public class Parser {
 				LocalDateTime by = DateTimeParser.parse(byStr);
 				Task t = new Deadline(desc, by);
 				tasks.addTask(t);
-				ui.show("added Deadline: " + desc + " by " + by);
+				response.append("Added Deadline: ").append(desc).append(" by ").append(by);
 				storage.save(tasks.getTasks());
-				return false;
+				return response.toString();
 			}
 
 			if (input.startsWith("event ")) {
@@ -100,29 +100,30 @@ public class Parser {
 				LocalDateTime to = DateTimeParser.parse(toStr);
 				Task t = new Event(desc, from, to);
 				tasks.addTask(t);
-				ui.show("added Event: " + desc + " from " + from + " to " + to);
+				response.append("Added Event: ").append(desc).append(" from ").append(from).append(" to ").append(to);
 				storage.save(tasks.getTasks());
-				return false;
+				return response.toString();
 			}
 
 			if (input.startsWith("find ")) {
 				String keyword = input.substring(5).trim();
 				ArrayList<Task> matches = tasks.find(keyword);
 				if (matches.isEmpty()) {
-					ui.show("No tasks found matching: " + keyword);
+					response.append("No tasks found matching: ").append(keyword);
 				} else {
-					ui.show("Here are the matching tasks in your list:");
+					response.append("Here are the matching tasks in your list:\n");
 					for (int i = 0; i < matches.size(); i++) {
-						ui.show(String.format("%d.%s", i + 1, matches.get(i).toString()));
+						response.append(String.format("%d. %s\n", i + 1, matches.get(i).toString()));
 					}
 				}
-				return false;
+				return response.toString();
 			}
 
-			ui.show("I didn't get that command. Try: list / todo / deadline / event / mark / unmark / bye");
+			response.append("I didn't get that command. Try: list / todo / deadline / event / mark / unmark / bye");
 		} catch (Exception e) {
-			ui.show("Invalid command or task number. Please try again.");
+			response.append("Invalid command or task number. Please try again.");
 		}
-		return false;
+
+		return response.toString();
 	}
 }
