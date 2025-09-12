@@ -8,14 +8,14 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import talkist.
+import talkist.Talkist;
 
 /**
  * A GUI for Talkist using FXML.
  */
 public class Main extends Application {
 
-	private Talkist talkist = new Talkist();
+	private Talkist talkist = new Talkist("./data/Talkist.txt");
 
 	@Override
 	public void start(Stage stage) {
@@ -31,4 +31,3 @@ public class Main extends Application {
 		}
 	}
 }
-

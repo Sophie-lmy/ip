@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
+import talkist.Talkist;
+
 /**
  * Controller for the main GUI.
  */
@@ -26,28 +28,42 @@ public class MainWindow extends AnchorPane {
 	private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.png"));
 	private Image botImage = new Image(this.getClass().getResourceAsStream("/images/chatbot.png"));
 
+	/**
+	 * Initialize method called by JavaFX after FXML elements are loaded.
+	 * Binds the scroll bar to follow new messages automatically.
+	 */
 	@FXML
 	public void initialize() {
 		scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
 	}
 
-	/** Injects the Talkist instance */
+	/**
+	 * Injects the Talkist instance into this controller.
+	 * @param t Talkist instance containing the chatbot logic
+	 */
 	public void setTalkist(Talkist t) {
 		talkist = t;
 	}
 
 	/**
-	 * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
-	 * the dialog container. Clears the user input after processing.
+	 * Handles user input from the TextField with following steps
+	 * 1. Reads the user's input
+	 * 2. Sends it to Talkist for processing
+	 * 3. Adds dialog boxes for both user input and bot response
+	 * 4. Clears the TextField
 	 */
 	@FXML
 	private void handleUserInput() {
 		String input = userInput.getText();
+
 		String response = talkist.getResponse(input);
+
+		// Add user and bot dialog boxes to the VBox container
 		dialogContainer.getChildren().addAll(
 				DialogBox.getUserDialog(input, userImage),
 				DialogBox.getDukeDialog(response, botImage)
 		);
+
 		userInput.clear();
 	}
 }
