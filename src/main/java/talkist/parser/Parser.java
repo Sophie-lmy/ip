@@ -30,8 +30,7 @@ public class Parser {
 
 		try {
 			if (input.equals("bye")) {
-				response.append("Bye! See you soon.");
-				return response.toString();
+				return "Bye! See you soon.";
 			}
 
 			if (input.equals("list")) {
