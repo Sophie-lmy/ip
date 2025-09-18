@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import talkist.parser.DateTimeParser;
@@ -31,29 +32,59 @@ public class Storage {
      * @return An ArrayList of Task Object
      */
     public ArrayList<Task> load() {
-        ArrayList<Task> tasks = new ArrayList<>();
-        File file = new File(filePath);
+        ensureFileExists();
+        List<String> lines = readLinesFromFile();
+        return parseTasksFromLines(lines);
+    }
 
+    /**
+     * Ensures that the storage file and its parent directories exist.
+     * Creates them if they do not exist.
+     */
+    private void ensureFileExists() {
+        File file = new File(filePath);
         try {
             if (!file.exists()) {
                 file.getParentFile().mkdirs();
                 file.createNewFile();
-                return tasks;
             }
-
-            Scanner sc = new Scanner(file);
-            while (sc.hasNextLine()) {
-                String line = sc.nextLine();
-                Task task = parseTask(line);
-                if (task != null) {
-                    tasks.add(task);
-                }
-            }
-            sc.close();
         } catch (IOException e) {
-            System.out.println("Error loading tasks: " + e.getMessage());
+            System.out.println("Error creating storage file: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Reads all lines from the storage file.
+     * @return A List of Strings, each representing a line in the file
+     */
+    private List<String> readLinesFromFile() {
+        List<String> lines = new ArrayList<>();
+        File file = new File(filePath);
+
+        try (Scanner sc = new Scanner(file)) {
+            while (sc.hasNextLine()) {
+                lines.add(sc.nextLine());
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading tasks from file: " + e.getMessage());
         }
 
+        return lines;
+    }
+
+    /**
+     * Parses a list of task strings into Task objects.
+     * @param lines List of strings representing tasks
+     * @return An ArrayList of Task objects
+     */
+    private ArrayList<Task> parseTasksFromLines(List<String> lines) {
+        ArrayList<Task> tasks = new ArrayList<>();
+        for (String line : lines) {
+            Task task = parseTask(line);
+            if (task != null) {
+                tasks.add(task);
+            }
+        }
         return tasks;
     }
 
