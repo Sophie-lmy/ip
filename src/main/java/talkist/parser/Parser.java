@@ -42,6 +42,7 @@ public class Parser {
 
 			if (input.startsWith("mark ")) {
 				int index = Integer.parseInt(input.substring(5).trim()) - 1;
+				assert index >= 0 && index < tasks.size() : "Mark index out of range";
 				Task t = tasks.getTask(index);
 				t.mark();
 				response.append("I've marked this task as done. Please check.\n").append(t.toString());
@@ -51,6 +52,7 @@ public class Parser {
 
 			if (input.startsWith("unmark ")) {
 				int index = Integer.parseInt(input.substring(7).trim()) - 1;
+				assert index >= 0 && index < tasks.size() : "Unmark index out of range";
 				Task t = tasks.getTask(index);
 				t.unmark();
 				response.append("I've marked this task as not done. Please check.\n").append(t.toString());
@@ -60,6 +62,7 @@ public class Parser {
 
 			if (input.startsWith("delete ")) {
 				int index = Integer.parseInt(input.substring(7).trim()) - 1;
+				assert index >= 0 && index < tasks.size() : "Delete index out of range";
 				Task t = tasks.removeTask(index);
 				response.append("Noted. I've removed this task:\n  ").append(t.toString());
 				storage.save(tasks.getTasks());
@@ -97,6 +100,7 @@ public class Parser {
 				String toStr = rest.substring(toAt + 3).trim();
 				LocalDateTime from = DateTimeParser.parse(fromStr);
 				LocalDateTime to = DateTimeParser.parse(toStr);
+				assert !from.isAfter(to) : "Event start time must be before or equal to end time";
 				Task t = new Event(desc, from, to);
 				tasks.addTask(t);
 				response.append("Added Event: ").append(desc).append(" from ").append(from).append(" to ").append(to);
