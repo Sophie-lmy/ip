@@ -7,6 +7,7 @@ package talkist.task.model;
 public abstract class Task {
     private String description;
     private boolean done;
+    private String tag;
 
     /**
      * Returns the type prefix of the task.
@@ -32,18 +33,13 @@ public abstract class Task {
         }
         this.description = description;
         this.done = false;
+        tag = "";
     }
 
-    /**
-     * Marks the task as done.
-     */
     public void mark() {
         this.done = true;
     }
 
-    /**
-     * Marks the task as not done.
-     */
     public void unmark() {
         this.done = false;
     }
@@ -64,9 +60,9 @@ public abstract class Task {
      * @return formatted string with status and description
      */
     protected String base() {
-        return String.format("[%s] %s",
+        return String.format("[%s] %s #%s",
                 done ? "X" : " ",
-                description);
+                description, tag);
     }
 
     /**
@@ -76,5 +72,13 @@ public abstract class Task {
      */
     public String getDescription() {
         return this.description;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getTag() {
+        return this.tag;
     }
 }

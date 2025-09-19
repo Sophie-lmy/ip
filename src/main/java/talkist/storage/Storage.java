@@ -110,35 +110,64 @@ public class Storage {
         try {
             String type = line.substring(1, 2);
             boolean done = line.charAt(4) == 'X';
-
+            String tag = "";
             if (type.equals("T")) {
-                String desc = line.substring(7);
+                int hashIdx = line.indexOf("#");
+                if (hashIdx != -1) {
+                    tag = line.substring(hashIdx + 1).trim();
+                    line = line.substring(0, hashIdx).trim();
+                }
+                String desc = line.substring(7).trim();
                 Todo todoTask = new Todo(desc);
                 if (done) {
                     todoTask.mark();
                 }
+                if (!tag.isEmpty()) {
+                    todoTask.setTag(tag);
+                }
                 return todoTask;
+
             } else if (type.equals("D")) {
                 int idx = line.indexOf("(by:");
-                String desc = line.substring(7, idx).trim();
-                String byStr = line.substring(idx + 5, line.length() - 1).trim();
+                int hashIdx = line.indexOf("#");
+                if (hashIdx != -1 && hashIdx < idx) {
+                    tag = line.substring(hashIdx + 1, idx).trim();
+                    line = line.substring(0, hashIdx) + line.substring(idx);
+                }
+                String desc = line.substring(7, line.indexOf("(by:")).trim();
+                String byStr = line.substring(line.indexOf("(by:") + 5, line.length() - 1).trim();
                 LocalDateTime by = DateTimeParser.parseFromStorage(byStr);
                 Deadline deadlineTask = new Deadline(desc, by);
                 if (done) {
                     deadlineTask.mark();
                 }
+                if (!tag.isEmpty()) {
+                    deadlineTask.setTag(tag);
+                }
                 return deadlineTask;
+
             } else if (type.equals("E")) {
                 int idxFrom = line.indexOf("(from:");
                 int idxTo = line.indexOf("to:");
-                String desc = line.substring(7, idxFrom).trim();
-                String fromStr = line.substring(idxFrom + 6, idxTo).replace("to", "").trim();
+                int hashIdx = line.indexOf("#");
+                String desc;
+                if (hashIdx != -1 && hashIdx < idxFrom) {
+                    desc = line.substring(7, hashIdx).trim();
+                    tag = line.substring(hashIdx + 1, idxFrom).trim();
+                } else {
+                    desc = line.substring(7, idxFrom).trim();
+                }
+
+                String fromStr = line.substring(idxFrom + 6, idxTo).trim();
                 String toStr = line.substring(idxTo + 3, line.length() - 1).trim();
                 LocalDateTime from = DateTimeParser.parseFromStorage(fromStr);
                 LocalDateTime to = DateTimeParser.parseFromStorage(toStr);
                 Event eventTask = new Event(desc, from, to);
                 if (done) {
                     eventTask.mark();
+                }
+                if (!tag.isEmpty()) {
+                    eventTask.setTag(tag);
                 }
                 return eventTask;
             }

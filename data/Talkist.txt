@@ -1,3 +1,7 @@
-[T][X] assignment 1
-[D][ ] week3 iP (by: Aug 29 2025 16:00)
-[T][ ] assignment 2
+[T][X] assignment 1 #cs2103t
+[D][ ] quiz #urgent (by: Sep 19 2025 16:00)
+[T][ ] testdesc #
+[E][ ] 1 # (from: Sep 29 2025 12:00 to: Sep 29 2025 14:00)
+[T][ ] 2 #
+[T][ ] 3 #
+[E][ ] testsample # (from: Sep 27 2025 19:00 to: Sep 28 2025 19:00)

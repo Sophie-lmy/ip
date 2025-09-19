@@ -122,6 +122,20 @@ public class Parser {
 				return response.toString();
 			}
 
+			if (input.startsWith("tag ")) {
+				String[] parts = input.substring(4).trim().split(" ", 2);
+				int index = Integer.parseInt(parts[0]) - 1;
+				String tag = parts[1].trim();
+				assert index >= 0 && index < tasks.size() : "Tag index out of range";
+
+				Task task = tasks.getTask(index);
+				task.setTag(tag);
+				response.append("Got it! I've tagged this task:\n")
+						.append(String.format("%d. %s", index + 1, task.toString()));
+				storage.save(tasks.getTasks());
+				return response.toString();
+			}
+
 			response.append("I didn't get that command. Try: list / todo / deadline / event / mark / unmark / bye");
 		} catch (Exception e) {
 			response.append("Invalid command or task number. Please try again.");
