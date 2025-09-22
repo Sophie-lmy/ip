@@ -13,6 +13,8 @@ import java.util.ArrayList;
 /**
  * Contains the method to read and respond to user commands for GUI usage.
  * Returns response strings instead of printing to console.
+ *
+ * AI-assisted: Used ChatGPT to provide possible response patterns with different personality.
  */
 public class Parser {
 
@@ -30,13 +32,14 @@ public class Parser {
 
 		try {
 			if (input.equals("bye")) {
-				return "Bye! See you soon.";
+				return "Sayonara~ see you soon! 👋";
 			}
 
 			if (input.equals("list")) {
 				for (int i = 0; i < tasks.size(); i++) {
 					response.append(String.format("%d. %s\n", i + 1, tasks.getTask(i).toString()));
 				}
+				response.append("All done! Hope it looks cute ✨");
 				return response.toString();
 			}
 
@@ -45,7 +48,7 @@ public class Parser {
 				assert index >= 0 && index < tasks.size() : "Mark index out of range";
 				Task t = tasks.getTask(index);
 				t.mark();
-				response.append("I've marked this task as done. Please check.\n").append(t.toString());
+				response.append("Yay! I marked this task as done ✅\n").append(t.toString());
 				storage.save(tasks.getTasks());
 				return response.toString();
 			}
@@ -55,7 +58,7 @@ public class Parser {
 				assert index >= 0 && index < tasks.size() : "Unmark index out of range";
 				Task t = tasks.getTask(index);
 				t.unmark();
-				response.append("I've marked this task as not done. Please check.\n").append(t.toString());
+				response.append("Okay~ this task is now not done\n").append(t.toString());
 				storage.save(tasks.getTasks());
 				return response.toString();
 			}
@@ -64,7 +67,7 @@ public class Parser {
 				int index = Integer.parseInt(input.substring(7).trim()) - 1;
 				assert index >= 0 && index < tasks.size() : "Delete index out of range";
 				Task t = tasks.removeTask(index);
-				response.append("Noted. I've removed this task:\n  ").append(t.toString());
+				response.append("Oops~ I removed this task\n  ").append(t.toString());
 				storage.save(tasks.getTasks());
 				return response.toString();
 			}
@@ -73,7 +76,7 @@ public class Parser {
 				String desc = input.substring(5).trim();
 				Task t = new Todo(desc);
 				tasks.addTask(t);
-				response.append("Added todo: ").append(desc);
+				response.append("Added a new todo 📌\n").append(desc);
 				storage.save(tasks.getTasks());
 				return response.toString();
 			}
@@ -86,7 +89,7 @@ public class Parser {
 				LocalDateTime by = DateTimeParser.parse(byStr);
 				Task t = new Deadline(desc, by);
 				tasks.addTask(t);
-				response.append("Added Deadline: ").append(desc).append(" by ").append(by);
+				response.append("Deadline task added ⏰ Hurry Up!\n").append(desc).append(" by ").append(by);
 				storage.save(tasks.getTasks());
 				return response.toString();
 			}
@@ -103,7 +106,7 @@ public class Parser {
 				assert !from.isAfter(to) : "Event start time must be before or equal to end time";
 				Task t = new Event(desc, from, to);
 				tasks.addTask(t);
-				response.append("Added Event: ").append(desc).append(" from ").append(from).append(" to ").append(to);
+				response.append("New Event 🎉🥳🎉\n").append(desc).append(" from ").append(from).append(" to ").append(to);
 				storage.save(tasks.getTasks());
 				return response.toString();
 			}
@@ -112,7 +115,7 @@ public class Parser {
 				String keyword = input.substring(5).trim();
 				ArrayList<Task> matches = tasks.find(keyword);
 				if (matches.isEmpty()) {
-					response.append("No tasks found matching: ").append(keyword);
+					response.append("Hmm... no tasks found for: ").append(keyword).append(" 😿");
 				} else {
 					response.append("Here are the matching tasks in your list:\n");
 					for (int i = 0; i < matches.size(); i++) {

@@ -35,6 +35,11 @@ public class MainWindow extends AnchorPane {
 	@FXML
 	public void initialize() {
 		scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+
+		String welcomeMessage = "Konnichiwa! This is Talkist.";
+		dialogContainer.getChildren().add(
+				DialogBox.getBotDialog(welcomeMessage, botImage)
+		);
 	}
 
 
