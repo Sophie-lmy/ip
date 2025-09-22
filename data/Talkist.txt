@@ -1,7 +1,4 @@
 [T][X] assignment 1 #cs2103t
-[D][ ] quiz #urgent (by: Sep 19 2025 16:00)
-[T][ ] testdesc #
-[E][X] 1 # (from: Sep 29 2025 12:00 to: Sep 29 2025 14:00)
-[T][ ] 3 #
-[E][ ] testsample # (from: Sep 27 2025 19:00 to: Sep 28 2025 19:00)
-[D][ ] assignment for cs # (by: Sep 22 2025 23:59)
+[D][X] quiz #urgent (by: Sep 19 2025 16:00)
+[E][ ] midterm # (from: Sep 29 2025 15:00 to: Sep 29 2025 16:00)
+[T][X] check iP status #

@@ -52,11 +52,7 @@ public class MainWindow extends AnchorPane {
 	}
 
 	/**
-	 * Handles user input from the TextField with following steps
-	 * 1. Reads the user's input
-	 * 2. Sends it to Talkist for processing
-	 * 3. Adds dialog boxes for both user input and bot response
-	 * 4. Clears the TextField
+	 * Processes the user’s input through Talkist and displays the chatbot’s response.
 	 */
 	@FXML
 	private void handleUserInput() {
