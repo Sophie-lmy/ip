@@ -6,7 +6,7 @@ package talkist.task.model;
  */
 public abstract class Task {
     private String description;
-    private boolean done;
+    private boolean isDone;
     private String tag;
 
     /**
@@ -32,25 +32,25 @@ public abstract class Task {
             throw new IllegalArgumentException("Description cannot be empty");
         }
         this.description = description;
-        this.done = false;
+        this.isDone = false;
         tag = "";
     }
 
     public void mark() {
-        this.done = true;
+        this.isDone = true;
     }
 
     public void unmark() {
-        this.done = false;
+        this.isDone = false;
     }
 
     /**
-     * Checks if the task is done.
+     * Checks if the task is isDone.
      *
-     * @return true if the task is done, false otherwise
+     * @return true if the task is isDone, false otherwise
      */
     public boolean isDone() {
-        return done;
+        return isDone;
     }
 
     /**
@@ -61,7 +61,7 @@ public abstract class Task {
      */
     protected String base() {
         return String.format("[%s] %s #%s",
-                done ? "X" : " ",
+                isDone ? "X" : " ",
                 description, tag);
     }
 

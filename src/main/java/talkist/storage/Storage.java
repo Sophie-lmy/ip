@@ -102,10 +102,6 @@ public class Storage {
         }
     }
 
-    /**
-     * Parse a task from its toString() representation.
-     * @return a Task Object
-     */
     private Task parseTask(String line) {
         try {
             String type = line.substring(1, 2);
