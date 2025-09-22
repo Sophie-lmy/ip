@@ -37,6 +37,7 @@ public class MainWindow extends AnchorPane {
 		scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
 	}
 
+
 	/**
 	 * Injects the Talkist instance into this controller.
 	 * @param t Talkist instance containing the chatbot logic
@@ -61,7 +62,7 @@ public class MainWindow extends AnchorPane {
 		// Add user and bot dialog boxes to the VBox container
 		dialogContainer.getChildren().addAll(
 				DialogBox.getUserDialog(input, userImage),
-				DialogBox.getDukeDialog(response, botImage)
+				DialogBox.getBotDialog(response, botImage)
 		);
 
 		userInput.clear();
